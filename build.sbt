@@ -1,4 +1,5 @@
 name := "social-credit-bot"
+maintainer := "zawodskoj"
 
 version := "0.1"
 
@@ -24,3 +25,6 @@ libraryDependencies += "org.jetbrains.skija" % s"skija-$skijaPlatform" % skijaVe
 libraryDependencies += "com.github.pureconfig" %% "pureconfig" % pureconfigVersion
 libraryDependencies ++= List("http4s-blaze-client", "http4s-blaze-server", "http4s-circe", "http4s-dsl").map("org.http4s" %% _ % http4sVersion)
 libraryDependencies ++= List("circe-parser", "circe-generic").map("io.circe" %% _  % circeVersion)
+
+enablePlugins(JavaAppPackaging)
+enablePlugins(DebianPlugin)
