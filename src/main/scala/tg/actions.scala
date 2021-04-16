@@ -11,7 +11,7 @@ import org.http4s.{EntityEncoder, Uri}
 import org.http4s.Method.POST
 import org.http4s.client.Client
 import org.http4s.client.dsl.io._
-import org.http4s.circe.CirceEntityCodec._
+import org.http4s.circe.CirceEntityDecoder._
 import org.http4s.MediaType
 
 object actions {
@@ -49,6 +49,8 @@ object actions {
   }
 
   def answerInlineQuery(queryId: String, sticker: Option[String])(implicit config: Config, client: Client[IO]): IO[Boolean] = {
+    import org.http4s.circe.CirceEntityEncoder._
+
     val request = POST(
       AnswerInlineQuery(
         queryId,
