@@ -117,9 +117,9 @@ object renderer {
       maxExp
     }
     maxExp / 3 match {
-      case 0 => Some(number.toString)
-      case 1 => Some((number / 1000) + "k")
-      case 2 => Some((number / 1000000) + "m")
+      case 0 => Some(abs.toString)
+      case 1 => Some((abs / 1000) + "k")
+      case 2 => Some((abs / 1000000) + "m")
       case _ => None
     }
   }

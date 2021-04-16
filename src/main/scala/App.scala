@@ -109,7 +109,7 @@ object App extends IOApp {
     }
   }
 
-  override def run(args: List[String]): IO[ExitCode] = {
+  val testServer: IO[ExitCode] =
     BlazeServerBuilder[IO](global)
       .withHttpApp {
         import org.http4s.dsl.io._
@@ -129,6 +129,7 @@ object App extends IOApp {
       .compile
       .drain
       .as(ExitCode.Success)
-    // loadConfig >>= (c => BlazeClientBuilder[IO](global).resource.use(loop(c)).as(ExitCode.Success))
-  }
+
+  override def run(args: List[String]): IO[ExitCode] =
+    loadConfig >>= (c => BlazeClientBuilder[IO](global).resource.use(loop(c)).as(ExitCode.Success))
 }
