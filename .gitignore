@@ -37,3 +37,4 @@ test-config.hocon
 .bsp
 
 3rdparty
+config.hocon

@@ -18,10 +18,11 @@ import scala.concurrent.duration.DurationInt
 import tg.types._
 import config._
 
+import org.http4s.client.blaze.BlazeClientBuilder
 import org.http4s.server.blaze.BlazeServerBuilder
 
 object App extends IOApp {
-  def loop(config: Config, client: Client[IO]): IO[Unit] = {
+  def loop(config: Config)(client: Client[IO]): IO[Unit] = {
     val baseUrl = s"https://api.telegram.org/bot${config.botToken}"
 
     Ref.of[IO, Long](0).flatMap { ref =>
@@ -108,7 +109,7 @@ object App extends IOApp {
     }
   }
 
-  override def run(args: List[String]): IO[ExitCode] =
+  override def run(args: List[String]): IO[ExitCode] = {
     BlazeServerBuilder[IO](global)
       .withHttpApp {
         import org.http4s.dsl.io._
@@ -128,5 +129,6 @@ object App extends IOApp {
       .compile
       .drain
       .as(ExitCode.Success)
-      //BlazeClientBuilder[IO](global).resource.use(loop).as(ExitCode.Success)
+    // loadConfig >>= (c => BlazeClientBuilder[IO](global).resource.use(loop(c)).as(ExitCode.Success))
+  }
 }
